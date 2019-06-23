@@ -9,13 +9,13 @@ Gem::Specification.new do |s|
   s.email           = ["pepibumur@gmail.com"]
   
   s.homepage        = "https://github.com/teambox/pushmeup"
-  s.summary         = %q{Send push notifications to Apple devices through ANPS and Android devices through GCM}
+  s.summary         = %q{Send push notifications to Apple devices through ANPS and Android devices through FCM}
   s.description     = <<-DESC
                         This gem is a wrapper to send push notifications to devices.
                         Currently it only sends to Android or iOS devices, but more platforms will be added soon.
 
                         With APNS (Apple Push Notifications Service) you can send push notifications to Apple devices.
-                        With GCM (Google Cloud Messaging) you can send push notifications to Android devices.
+                        With FCM (Google Cloud Messaging) you can send push notifications to Android devices.
                       DESC
 
   s.rubyforge_project = "pushmeup"

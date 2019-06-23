@@ -95,20 +95,20 @@ this will result in a payload like this:
         NSLog("deviceToken: %", deviceToken);
     }
 
-## GCM (Google Cloud Messaging)
+## FCM (Google Cloud Messaging)
 
 ### Configure
-Like APNS, we've to create a GCM application object with our config.
+Like APNS, we've to create a FCM application object with our config.
 
-		GCMApp = GCM::Application.new(host,format,key)
+		FCMApp = FCM::Application.new(host,format,key)
 
-		GCMApp.host = 'https://android.googleapis.com/gcm/send'
-		# https://android.googleapis.com/gcm/send is default
+		FCMApp.host = 'https://fcm.googleapis.com/fcm/send'
+		# https://fcm.googleapis.com/fcm/send is default
 
-		GCMApp.format = :json
+		FCMApp.format = :json
 		# :json is default and only available at the moment
 
-		GCMApp.key = "123abc456def"
+		FCMApp.key = "123abc456def"
 		# this is the apiKey obtained from here https://code.google.com/apis/console/
 		
 ### Usage
@@ -121,16 +121,16 @@ Like APNS, we've to create a GCM application object with our config.
 		data = {:key => "value", :key2 => ["array", "value"]}
 		# must be an hash with all values you want inside you notification
 
-		GCMApp.send_notification( destination )
+		FCMApp.send_notification( destination )
 		# Empty notification
 
-		GCMApp.send_notification( destination, data )
+		FCMApp.send_notification( destination, data )
 		# Notification with custom information
 
-		GCMApp.send_notification( destination, data, :collapse_key => "placar_score_global", :time_to_live => 3600, :delay_while_idle => false )
+		FCMApp.send_notification( destination, data, :collapse_key => "placar_score_global", :time_to_live => 3600, :delay_while_idle => false )
 		# Notification with custom information and parameters
 
-for more information on parameters check documentation: [GCM | Android Developers](http://developer.android.com/guide/google/gcm/gcm.html#request)
+for more information on parameters check documentation: [FCM | Android Developers](https://firebase.google.com/docs/cloud-messaging)
 
 #### Sending multiple notifications:
 
@@ -145,49 +145,49 @@ for more information on parameters check documentation: [GCM | Android Developer
 		options1 = {:collapse_key => "placar_score_global", :time_to_live => 3600, :delay_while_idle => false}
 		# options for the notification
 		
-		n1 = GCM::Notification.new(destination1, data1, options1)
-		n2 = GCM::Notification.new(destination2, data2)
-		n3 = GCM::Notification.new(destination3, data3, options2)
+		n1 = FCM::Notification.new(destination1, data1, options1)
+		n2 = FCM::Notification.new(destination2, data2)
+		n3 = FCM::Notification.new(destination3, data3, options2)
 
-		GCMApp.send_notifications( [n1, n2, n3] )
+		FCMApp.send_notifications( [n1, n2, n3] )
 		# In this case, every notification has his own parameters
 	
-for more information on parameters check documentation: [GCM | Android Developers](http://developer.android.com/guide/google/gcm/gcm.html#request)
+for more information on parameters check documentation: [FCM | Android Developers](https://firebase.google.com/docs/cloud-messaging)
 
 #### Getting your Android device token (regId)
 
-Check this link [GCM: Getting Started](http://developer.android.com/guide/google/gcm/gs.html)
+Check this link [FCM: Getting Started](https://firebase.google.com/docs/cloud-messaging)
 
-### (Optional) You can add multiple keys for GCM
+### (Optional) You can add multiple keys for FCM
 
 You can use multiple keys to send notifications, to do it just do this changes in the code 
 
 #### Configure
 
-		GCMApp.key = { :key1 => "123abc456def", :key2 => "456def123abc" }
+		FCMApp.key = { :key1 => "123abc456def", :key2 => "456def123abc" }
 		# the ``:key1`` and the ``:key2`` can be any object, they can be the projectID, the date, the version, doesn't matter.
 		# The only restrain is: they need to be valid keys for a hash.
 
 #### Usage
 
 		# For single notification
-		GCMApp.send_notification( destination, :identity => :key1 )
+		FCMApp.send_notification( destination, :identity => :key1 )
 		# Empty notification
 
-		GCMApp.send_notification( destination, data, :identity => :key1 )
+		FCMApp.send_notification( destination, data, :identity => :key1 )
 		# Notification with custom information
 
-		GCMApp.send_notification( destination, data, :collapse_key => "placar_score_global", :time_to_live => 3600, :delay_while_idle => false, :identity => :key1 )
+		FCMApp.send_notification( destination, data, :collapse_key => "placar_score_global", :time_to_live => 3600, :delay_while_idle => false, :identity => :key1 )
 		# Notification with custom information and parameters
 
 		# For multiple notifications
 		options1 = {}
 		options2 = {..., :identity => :key2}
-		n1 = GCM::Notification.new(destination1, data1, options1.merge({:identity => :key2}))
-		n2 = GCM::Notification.new(destination2, data2, :identity => :key1)
-		n3 = GCM::Notification.new(destination3, data3, options2)
+		n1 = FCM::Notification.new(destination1, data1, options1.merge({:identity => :key2}))
+		n2 = FCM::Notification.new(destination2, data2, :identity => :key1)
+		n3 = FCM::Notification.new(destination3, data3, options2)
 
-		GCMApp.send_notifications( [n1, n2, n3] )
+		FCMApp.send_notifications( [n1, n2, n3] )
 		# In this case, every notification has his own parameters, options and key
 
 ## Status

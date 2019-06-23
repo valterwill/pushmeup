@@ -30,7 +30,7 @@ describe Pushmeup do
       end
 
       it "should allow only notifications with device_tokens as array" do
-        n = GCM::Notification.new("id", @options)
+        n = FCM::Notification.new("id", @options)
         n.device_tokens.is_a?(Array).should be_truthy
 
         n.device_tokens = ["a" "b", "c"]
@@ -41,7 +41,7 @@ describe Pushmeup do
       end
 
       it "should allow only notifications with data as hash with :data root" do
-        n = GCM::Notification.new("id", { :data => "data" })
+        n = FCM::Notification.new("id", { :data => "data" })
 
         n.data.is_a?(Hash).should be_truthy
         n.data.should == {:data => "data"}
